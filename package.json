@@ -1,0 +1,19 @@
+{
+  "name": "impkit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/main.js",
+  "scripts": {
+    "test": "tsc && node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "datakit": "github:TheWANDatabase/datakit",
+    "drizzle-orm": "^0.28.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.10"
+  }
+}
