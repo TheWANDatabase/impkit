@@ -11,7 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "datakit": "github:TheWANDatabase/datakit",
-    "drizzle-orm": "^0.28.6"
+    "drizzle-orm": "^0.28.6",
+    "lumberjack": "github:TheWANDatabase/lumberjack"
   },
   "devDependencies": {
     "@types/node": "^20.8.10"
