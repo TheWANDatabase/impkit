@@ -11,6 +11,8 @@ async function runtime() {
   let client = new Client();
 
   for (let show of thisYear) {
+    console.log(show.metadata)
+
     let aired = show.metadata.mainShowStart ? new Date(show.metadata.mainShowStart) : new Date(show.metadata.snippet.publishedAt);
 
 
@@ -18,11 +20,14 @@ async function runtime() {
 
 
     let thumburl = "";
-    if (show.metadata.thumbnails.maxres !== undefined) thumburl = show.metadata.thumbnails.maxres.url
-    else if (show.metadata.thumbnails.standard !== undefined) thumburl = show.metadata.thumbnails.standard.url
-    else if (show.metadata.thumbnails.high !== undefined) thumburl = show.metadata.thumbnails.high.url
-    else if (show.metadata.thumbnails.medium !== undefined) thumburl = show.metadata.thumbnails.medium.url
-    else if (show.metadata.thumbnails.default !== undefined) thumburl = show.metadata.thumbnails.default.url
+    if (show.metadata.thumbnails !== undefined) {
+      if (show.metadata.thumbnails.maxres !== undefined) thumburl = show.metadata.thumbnails.maxres.url
+      else if (show.metadata.thumbnails.standard !== undefined) thumburl = show.metadata.thumbnails.standard.url
+      else if (show.metadata.thumbnails.high !== undefined) thumburl = show.metadata.thumbnails.high.url
+      else if (show.metadata.thumbnails.medium !== undefined) thumburl = show.metadata.thumbnails.medium.url
+      else if (show.metadata.thumbnails.default !== undefined) thumburl = show.metadata.thumbnails.default.url
+    }
+
 
     eid = thumburl.split('/')[4]
     let exists = (await client.data.select().from(episodes).where(eq(episodes.id, eid)).limit(1))[0] !== undefined;

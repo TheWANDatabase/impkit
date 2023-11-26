@@ -1,0 +1,54 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build-prod:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: docker build . --tag impkit:latest
+
+
+      - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload the Docker image
+        run: |
+          GITHUB_REPOSITORY=$(echo ${GITHUB_REPOSITORY} | tr '[:upper:]' '[:lower:]')
+          docker tag impkit:latest ghcr.io/${GITHUB_REPOSITORY}/impkit:latest
+          docker push ghcr.io/${GITHUB_REPOSITORY}/impkit:latest
+
+  build-test:
+    if: github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_BRANCH_NAME
+        id: extract_branch
+
+      - name: Build the Docker image
+        run: docker build . --tag impkit:${GITHUB_BRANCH_NAME}
+
+      - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload the Docker image
+        run: |
+          GITHUB_REPOSITORY=$(echo ${GITHUB_REPOSITORY} | tr '[:upper:]' '[:lower:]')
+          docker tag impkit:latest ghcr.io/${GITHUB_REPOSITORY}/impkit:${GITHUB_BRANCH_NAME}
+          docker push ghcr.io/${GITHUB_REPOSITORY}/impkit:${GITHUB_BRANCH_NAME}
+          docker push ghcr.io/${GITHUB_REPOSITORY}/impkit:${GITHUB_BRANCH_NAME}
