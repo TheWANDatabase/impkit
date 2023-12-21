@@ -4,7 +4,8 @@
   "description": "",
   "main": "dist/main.js",
   "scripts": {
-    "test": "tsc && node ."
+    "test": "tsc && node .",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -12,9 +13,11 @@
   "dependencies": {
     "datakit": "github:TheWANDatabase/datakit",
     "drizzle-orm": "^0.28.6",
-    "lumberjack": "github:TheWANDatabase/lumberjack"
+    "lumberjack": "github:TheWANDatabase/lumberjack",
+    "luxon": "^3.4.4"
   },
   "devDependencies": {
+    "@types/luxon": "^3.3.7",
     "@types/node": "^20.8.10"
   }
 }
