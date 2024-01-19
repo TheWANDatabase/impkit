@@ -19,7 +19,6 @@ The general workflow the app follows is as such:
 
 1) Pull episode data from [WhenPlane](https://whenplane.com)
 2) Process all episodes, updating existing entries with the newest data, and inserting new entries where required
-3) 
 
 
 
