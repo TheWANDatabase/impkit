@@ -2,17 +2,13 @@
 import { readdirSync, readFileSync } from "fs";
 import Logger from "lumberjack";
 import {
-  changelog,
-  changes,
   ChangeStatus,
   Client,
-  comments,
   episodeMarkers,
   episodes,
   media,
   sponsorMatching,
   sponsorSpot,
-  topics,
   merchMessages,
 } from "datakit";
 import { asc, eq, gte } from "drizzle-orm";
@@ -200,6 +196,10 @@ async function upsertEpisode(client: any, show: any) {
 async function processDocument(client: any, file: string, episode: any) {
   const text = readFileSync("./stamps/" + file, "utf-8");
   const topics: Topic[] = await parseDocument(text);
+  await processTopics(client, episode, topics);
+}
+
+async function processTopics(client: any, episode: any, topics: Topic[]) {
   const sponsorRegex = (
     await client.data
       .select()
