@@ -13,6 +13,7 @@ import {
   sponsorMatching,
   sponsorSpot,
   topics,
+  merchMessages,
 } from "datakit";
 import { asc, eq, gte } from "drizzle-orm";
 import { parseDocument, Topic } from "./helpers/parser";
@@ -23,6 +24,7 @@ import {
   proposeChange,
 } from "./helpers/topics";
 import internal from "stream";
+import { resolveSponsor } from "./helpers/sponsors";
 
 const logger = new Logger("impkit", "0.0.1");
 const NOKI_UID = "d6ecc832-4c9d-4e2c-a121-b646e2cdd645";
@@ -209,133 +211,112 @@ async function processDocument(client: any, file: string, episode: any) {
     return entity;
   });
   for (const topic of topics) {
-    let internalTopic = await addTopic(client, {
-      episodeId: episode.id,
-      title: topic.title,
-      start: topic.start,
-      end: topic.end,
-      created: topic.created,
-      modified: topic.modified,
-      ref: topic.ref,
-      kind: topic.kind,
-    });
-
-    await addTopicChangelog(client, internalTopic);
-
-
-    let internalChangelogId = await proposeChange(client, {
-      changelogId: internalTopic,
-      status: ChangeStatus.accepted,
-      added: topic.created,
-      modified: topic.modified,
-      authorId: NOKI_UID,
-      title: topic.title,
-      start: topic.start,
-      end: topic.end,
-    });
-
-    await addComment(
-      client,
-      internalChangelogId,
-      SYS_UID,
-      "Automatically imported timestamp based off of the values provided in NoKi1119's Timestamp document (available [here](https://docs.google.com/document/d/1R8f1IILzJV-xH6LP7Npj5PNgrI8DquxicFjZOxJvQgI/edit))"
-    );
-    if (!topic.children) continue;
-    for (const child of topic.children) {
-      let internalChildTopic = await addTopic(client, {
+    try {
+      let internalTopic = await addTopic(client, {
         episodeId: episode.id,
-        parent: internalTopic,
-        title: child.title,
-        start: child.start,
-        end: child.end,
-        created: child.created,
-        modified: child.modified,
-        ref: child.ref,
-        kind: child.kind,
+        title: topic.title,
+        start: topic.start,
+        end: topic.end,
+        created: topic.created,
+        modified: topic.modified,
+        ref: topic.ref,
+        kind: topic.kind,
       });
-  
-      await addTopicChangelog(client, internalChildTopic);
-      let internalChildChangelogId = await proposeChange(client, {
-        changelogId: internalChildTopic,
+
+      await addTopicChangelog(client, internalTopic);
+
+      let internalChangelogId = await proposeChange(client, {
+        changelogId: internalTopic,
         status: ChangeStatus.accepted,
-        added: child.created,
-        modified: child.modified,
+        added: topic.created,
+        modified: topic.modified,
         authorId: NOKI_UID,
-        title: child.title,
-        start: child.start,
-        end: child.end,
+        title: topic.title,
+        start: topic.start,
+        end: topic.end,
       });
-  
+
       await addComment(
         client,
-        internalChildChangelogId,
+        internalChangelogId,
         SYS_UID,
         "Automatically imported timestamp based off of the values provided in NoKi1119's Timestamp document (available [here](https://docs.google.com/document/d/1R8f1IILzJV-xH6LP7Npj5PNgrI8DquxicFjZOxJvQgI/edit))"
       );
-  
+      if (!topic.children) continue;
+      for (const child of topic.children) {
+        try {
+          switch (child.kind) {
+            case "merch message":
+              let [mmResult] = await client.data
+                .insert(merchMessages)
+                .values({
+                  episodeId: episode.id,
+                  message: child.title,
+                  color: "#f65013",
+                  author: "Unknown Author",
+                  start: child.start,
+                  end: child.end,
+                })
+                .returning();
+              child.ref = mmResult.id;
+              break;
+
+            case "sponsor":
+              let sponsor = resolveSponsor(child.title, sponsorRegex);
+              if (!sponsor) break;
+              let [sponsorResult] = await client.data
+                .insert(sponsorSpot)
+                .values({
+                  message: child.title,
+                  url: null,
+                  companyId: sponsor,
+                  isDennis: false,
+                  start: child.start,
+                  end: child.end,
+                  safe: false,
+                  episodeId: episode.id,
+                })
+                .returning();
+              child.ref = sponsorResult.id;
+              break;
+          }
+
+          let internalChildTopic = await addTopic(client, {
+            episodeId: episode.id,
+            parent: internalTopic,
+            title: child.title,
+            start: child.start,
+            end: child.end,
+            created: child.created,
+            modified: child.modified,
+            ref: child.ref,
+            kind: child.kind,
+          });
+
+          await addTopicChangelog(client, internalChildTopic);
+          let internalChildChangelogId = await proposeChange(client, {
+            changelogId: internalChildTopic,
+            status: ChangeStatus.accepted,
+            added: child.created,
+            modified: child.modified,
+            authorId: NOKI_UID,
+            title: child.title,
+            start: child.start,
+            end: child.end,
+          });
+
+          await addComment(
+            client,
+            internalChildChangelogId,
+            SYS_UID,
+            "Automatically imported timestamp based off of the values provided in NoKi1119's Timestamp document (available [here](https://docs.google.com/document/d/1R8f1IILzJV-xH6LP7Npj5PNgrI8DquxicFjZOxJvQgI/edit))"
+          );
+        } catch (e) {
+          logger.error(e);
+        }
+      }
+    } catch (e) {
+      logger.error(e);
     }
   }
-
-  process.exit();
-  //       iteratingMerchMessages = true;
-  //     } else if (iteratingMerchMessages && lineIsSecondaryTopic) {
-  //     } else if (iteratingMerchMessages && lineIsMainTopic) {
-  //       iteratingMerchMessages = false;
-  //     } else if (lineIsMainTopic) {
-  //       let text =
-  //         line.split(TimestampPattern).pop()?.replace(/[*.]*/gim, "").trim() ||
-  //         "";
-  //       let timestamp = toSeconds(line.match(TimestampPattern)?.shift() || "");
-
-  //       switch (text) {
-  //         case "":
-  //         case "Chapters":
-  //         case "Outro":
-  //           continue;
-
-  //         case "Intro":
-  //           await client.data
-  //             .update(episodes)
-  //             .set({
-  //               introStart: timestamp,
-  //             })
-  //             .where(eq(episodes.id, episode.id));
-  //           break;
-
-  //         default:
-  //           let topicTitle = text.split(/topic #\d*:\s/gim).pop();
-  //           console.log(timestamp, topicTitle, "|", line);
-  //
-  //             .then(([inserted]: any[]) => {
-  //
-  //                 .then(() => {
-  //                   client.data
-  //                     .insert(changes)
-  //                     .values({
-  //                       changelogId: inserted.id,
-  //                       status: ChangeStatus.accepted,
-  //                       added: new Date(inserted.created || ""),
-  //                       modified: new Date(inserted.created || ""),
-  //                       authorId: "7dd95843-442d-41d1-8f1d-2e5b45f415fe",
-  //                       title: topicTitle,
-  //                       start: timestamp,
-  //                       end: null,
-  //                     })
-  //                     .returning()
-  //                     .then(([change]: any[]) => {
-  //                       client.data
-  //                         .insert(comments)
-  //                         .values({
-  //                           changeId: change.id,
-  //                           message:
-  //                             "Automatically imported timestamp based off of the values provided in NoKi1119's Timestamp document (available [here](https://docs.google.com/document/d/1R8f1IILzJV-xH6LP7Npj5PNgrI8DquxicFjZOxJvQgI/edit))",
-  //                           authorId: "7dd95843-442d-41d1-8f1d-2e5b45f415fe",
-  //                         })
-  //                         .then(() => {});
-  //                     });
-  //                 });
-  //             });
-  //       }
-  //     }
-  //   }
 }
