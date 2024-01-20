@@ -94,7 +94,6 @@ export function parseDocument(text: string): Topic[] {
         if (inMerchMessages) inMerchMessages = false;
 
         if (IGNORE_HEADERS.includes(title)) continue;
-        console.log(title, "timestamp: " + timestamp);
         topics.push({
           id: "unknown-" + Date.now(),
           episodeId: "",
