@@ -141,7 +141,7 @@ async function upsertEpisode(client: any, show: any) {
 
   let episode: any = {
     id: eid,
-    floatplane: show.metadata.vods.floatplane,
+    floatplane: show.metadata.vods ? show.metadata.vods.floatplane : null,
     title: show.metadata.title.trim(),
     description: show.metadata.description,
     aired,
@@ -178,6 +178,15 @@ async function upsertEpisode(client: any, show: any) {
         " | " +
         episode.title
     );
+
+    console.log(episode)
+
+    if (episode.thumbnail === undefined && thumburl) {
+      let mediaResult = (
+        await client.data.insert(media).values(thumbnail).returning()
+      )[0];
+      episode.thumbnail = mediaResult.id;
+    }
     await client.data.update(episodes).set(episode).where(eq(episodes.id, eid));
   }
 
