@@ -1,66 +1,60 @@
-/**/
-import { readdirSync, readFileSync } from "fs";
+import { existsSync, readFileSync, readdirSync } from "fs";
 import Logger from "lumberjack";
-import {
-  ChangeStatus,
-  Client,
-  episodeMarkers,
-  episodes,
-  media,
-  sponsorMatching,
-  sponsorSpot,
-  merchMessages,
-} from "datakit";
+import { Client, episodeMarkers, episodes, media } from "datakit";
 import { asc, eq, gte } from "drizzle-orm";
-import { parseDocument, Topic } from "./helpers/parser";
-import {
-  addComment,
-  addTopic,
-  addTopicChangelog,
-  proposeChange,
-} from "./helpers/topics";
-import internal from "stream";
-import { resolveSponsor } from "./helpers/sponsors";
-
-const logger = new Logger("impkit", "0.0.1");
-const NOKI_UID = "d6ecc832-4c9d-4e2c-a121-b646e2cdd645";
-const SYS_UID = "25ee7958-a3d0-42a6-8621-806fe627567b";
+import { getBlogPost } from "./helpers/floatplane";
+import { downloadVideo, getVideoInfo } from "./helpers/youtube";
+import { logger, client, redis } from "./database";
+import { upload } from "./helpers/s3";
+import { transcribeAudio } from "./helpers/whisper";
+import { installDependencies } from "./helpers/env";
 
 let files = new Map<string, string>();
 let NoKiDocs = readdirSync("./stamps");
 
 async function runtime() {
   logger.log("Welcome to ImpKit");
-  let client = new Client();
+
+  await redis.connect();
+
+  // await installDependencies();
 
   logger.info("Parsing Timestamp Document Dates");
+  let promises: Promise<void>[] = [];
   for (const file of NoKiDocs) {
-    let toParse = file
-      .split(".txt")[0]
-      .replace(/(\d{1,2}(st)\s|(th)\s|(nd)\s|(rd)\s)of/gim, "");
-    let date = new Date(toParse);
-    let episode = (
-      await client.data
-        .select({
-          id: episodes.id,
-        })
-        .from(episodes)
-        .where(gte(episodes.aired, date))
-        .orderBy(asc(episodes.aired))
-        .limit(1)
-    )[0];
-    if (episode === undefined) continue;
-    logger.debug(
-      ` - Mapping file ${date.toISOString()} | ${episode.id} | ${file}`
+    promises.push(
+      new Promise<void>(async (resolve) => {
+        let toParse = file
+          .split(".txt")[0]
+          .replace(/(\d{1,2}(st)\s|(th)\s|(nd)\s|(rd)\s)of/gim, "");
+        let date = new Date(toParse);
+        let episode = (
+          await client.data
+            .select({
+              id: episodes.id,
+            })
+            .from(episodes)
+            .where(gte(episodes.aired, date))
+            .orderBy(asc(episodes.aired))
+            .limit(1)
+        )[0];
+        if (episode === undefined) return resolve();
+        logger.debug(
+          ` - Mapping file ${date.toISOString()} | ${episode.id} | ${file}`
+        );
+        files.set(episode.id, file);
+        return resolve();
+      })
     );
-    files.set(episode.id, file);
   }
+
+  await Promise.allSettled(promises);
 
   logger.info(
     "Fetching shows from current year",
     `(${new Date().getUTCFullYear()})`
   );
-  let allShows = await (
+  let allShows: any[] = await (
     await fetch(
       "https://whenplane.com/api/history/year/" + new Date().getUTCFullYear()
     )
@@ -68,18 +62,32 @@ async function runtime() {
 
   logger.info("Fetching shows from past years");
   allShows = allShows.concat(
+    await (await fetch("https://whenplane.com/api/history/year/2023")).json(),
     await (await fetch("https://whenplane.com/api/oldShows")).json()
   );
 
-  logger.info("Pre-processing steps completed, starting archival...");
+  allShows = allShows.sort((a, b) => {
+    if (
+      new Date(a.metadata.mainShowStart).getTime() >
+      new Date(b.metadata.mainShowStart).getTime()
+    )
+      return -1;
+    else if (
+      new Date(a.metadata.mainShowStart).getTime() <
+      new Date(b.metadata.mainShowStart).getTime()
+    )
+      return 1;
+    return 0;
+  });
+
   for (let show of allShows) {
-    await upsertEpisode(client, show).catch((e) => logger.error(e));
+    await upsertEpisode(client, show);
   }
 }
 
 runtime();
 
-async function upsertEpisode(client: any, show: any) {
+async function upsertEpisode(client: any, show: any): Promise<void> {
   let aired = show.metadata.mainShowStart
     ? new Date(show.metadata.mainShowStart)
     : new Date(show.metadata.snippet.publishedAt);
@@ -141,12 +149,18 @@ async function upsertEpisode(client: any, show: any) {
 
   let episode: any = {
     id: eid,
-    floatplane: show.metadata.vods ? show.metadata.vods.floatplane : null,
+    floatplane: show.metadata.vods.floatplane
+      ? show.metadata.vods.floatplane.split("/").pop()
+      : undefined,
     title: show.metadata.title.trim(),
     description: show.metadata.description,
     aired,
     duration,
   };
+
+  // let yt = await getVideoInfo(episode.id);
+  // if (yt)
+  //   episode.duration = parseInt(yt.player_response.videoDetails.lengthSeconds);
 
   if (!exists) {
     logger.log(
@@ -164,9 +178,10 @@ async function upsertEpisode(client: any, show: any) {
     )[0];
     episode.thumbnail = mediaResult.id;
     await client.data.insert(episodes).values(episode);
-    await client.data
+    [episode] = await client.data
       .insert(episodeMarkers)
-      .values({ id: episode.id, thumb: true });
+      .values({ id: episode.id, thumb: true })
+      .returning();
   } else {
     logger.log(
       "Updating  | " +
@@ -179,153 +194,124 @@ async function upsertEpisode(client: any, show: any) {
         episode.title
     );
 
-    console.log(episode)
-
     if (episode.thumbnail === undefined && thumburl) {
       let mediaResult = (
         await client.data.insert(media).values(thumbnail).returning()
       )[0];
       episode.thumbnail = mediaResult.id;
     }
-    await client.data.update(episodes).set(episode).where(eq(episodes.id, eid));
+    [episode] = await client.data
+      .update(episodes)
+      .set(episode)
+      .where(eq(episodes.id, eid))
+      .returning();
   }
 
-  let document = files.get(episode.id as any);
+  let [metadata] = await client.data
+    .select()
+    .from(episodeMarkers)
+    .where(eq(episodeMarkers.id, episode.id));
 
-  if (document !== undefined) {
-    logger.info(" - Document found for episode: " + episode.id);
-    await processDocument(client, document, episode);
-  } else {
-    logger.info(" - Document not found for episode: " + episode.id);
+  // if (!metadata.floatplaneCaptions && episode.floatplane) {
+  //   await redis.xAdd("vods", "*", {
+  //     kind: "floatplane",
+  //     id: episode.id,
+  //     vod: episode.floatplane,
+  //   });
+  // }
+
+  if (!metadata.youtubeCaptions) {
+    await redis.xAdd("vods", "*", {
+      kind: "youtube",
+      id: episode.id,
+      vod: episode.id,
+    });
   }
 
-  //   console.log(episodes, files.get(episode.aired as Date))
-}
+  // process.exit();
 
-async function processDocument(client: any, file: string, episode: any) {
-  const text = readFileSync("./stamps/" + file, "utf-8");
-  const topics: Topic[] = await parseDocument(text);
-  await processTopics(client, episode, topics);
-}
+  // Find the document assigned to this episode ID
+  // let document = files.get(episode.id as any);
 
-async function processTopics(client: any, episode: any, topics: Topic[]) {
-  const sponsorRegex = (
-    await client.data
-      .select()
-      .from(sponsorMatching)
-      .where(eq(sponsorMatching.enabled, true))
-      .orderBy(asc(sponsorMatching.priority))
-  ).map((entity: any) => {
-    entity.regex = new RegExp(entity.pattern, entity.flags || "gm");
-    return entity;
-  });
-  for (const topic of topics) {
-    try {
-      let internalTopic = await addTopic(client, {
-        episodeId: episode.id,
-        title: topic.title,
-        start: topic.start,
-        end: topic.end,
-        created: topic.created,
-        modified: topic.modified,
-        ref: topic.ref,
-        kind: topic.kind,
-      });
+  // If the document exists, parse it for topic importing
+  // if (document !== undefined) {
+  //   logger.info(" - Document found for episode: " + episode.id);
+  //   await processDocument(client, document, episode);
+  // } else {
+  // // otherwise, import from youtube
+  //   logger.info(" - Document not found for episode: " + episode.id);
+  //  // TODO: Add youtube importing
+  // }
+  // let hasFPCaption = await fetch(
+  //   `https://cdn.thewandb.com/captions/${episode.id}-fp.vtt`
+  // );
 
-      await addTopicChangelog(client, internalTopic);
+  // let hasYTCaption = await fetch(
+  //   `https://cdn.thewandb.com/captions/${episode.id}.vtt`
+  // );
 
-      let internalChangelogId = await proposeChange(client, {
-        changelogId: internalTopic,
-        status: ChangeStatus.accepted,
-        added: topic.created,
-        modified: topic.modified,
-        authorId: NOKI_UID,
-        title: topic.title,
-        start: topic.start,
-        end: topic.end,
-      });
+  // if (hasYTCaption.status === 404) {
+  //   if (!existsSync(`./audio/${yt.player_response.videoDetails.videoId}.mp3`)) {
+  //     console.log("Downloading VOD from Youtube");
+  //     await downloadVideo(yt.player_response.videoDetails.videoId);
+  //   }
 
-      await addComment(
-        client,
-        internalChangelogId,
-        SYS_UID,
-        "Automatically imported timestamp based off of the values provided in NoKi1119's Timestamp document (available [here](https://docs.google.com/document/d/1R8f1IILzJV-xH6LP7Npj5PNgrI8DquxicFjZOxJvQgI/edit))"
-      );
-      if (!topic.children) continue;
-      for (const child of topic.children) {
-        try {
-          switch (child.kind) {
-            case "merch message":
-              let [mmResult] = await client.data
-                .insert(merchMessages)
-                .values({
-                  episodeId: episode.id,
-                  message: child.title,
-                  color: "#f65013",
-                  author: "Unknown Author",
-                  start: child.start,
-                  end: child.end,
-                })
-                .returning();
-              child.ref = mmResult.id;
-              break;
+  //   if (
+  //     !existsSync(
+  //       `./transcribed/${yt.player_response.videoDetails.videoId}.json`
+  //     )
+  //   ) {
+  //     console.log("Transcribing Audio");
+  //     await transcribeAudio(yt.player_response.videoDetails.videoId);
+  //     await upload(
+  //       `./transcribed/${yt.player_response.videoDetails.videoId}.vtt`,
+  //       `captions/${yt.player_response.videoDetails.videoId}.vtt`
+  //     );
+  //     await client.data
+  //       .update(episodeMarkers)
+  //       .set({
+  //         youtubeCaptions: true,
+  //       })
+  //       .where(eq(episodeMarkers.id, episode.id));
+  //   } else {
+  //     console.log("Uploading Transcripts");
+  //     await upload(
+  //       `./transcribed/${yt.player_response.videoDetails.videoId}.vtt`,
+  //       `captions/${yt.player_response.videoDetails.videoId}.vtt`
+  //     );
+  //     await client.data
+  //       .update(episodeMarkers)
+  //       .set({
+  //         youtubeCaptions: true,
+  //       })
+  //       .where(eq(episodeMarkers.id, episode.id));
+  //   }
+  // } else {
+  //   await client.data
+  //     .update(episodeMarkers)
+  //     .set({
+  //       youtubeCaptions: true,
+  //     })
+  //     .where(eq(episodeMarkers.id, episode.id));
+  // }
 
-            case "sponsor":
-              let sponsor = resolveSponsor(child.title, sponsorRegex);
-              if (!sponsor) break;
-              let [sponsorResult] = await client.data
-                .insert(sponsorSpot)
-                .values({
-                  message: child.title,
-                  url: null,
-                  companyId: sponsor,
-                  isDennis: false,
-                  start: child.start,
-                  end: child.end,
-                  safe: false,
-                  episodeId: episode.id,
-                })
-                .returning();
-              child.ref = sponsorResult.id;
-              break;
-          }
-
-          let internalChildTopic = await addTopic(client, {
-            episodeId: episode.id,
-            parent: internalTopic,
-            title: child.title,
-            start: child.start,
-            end: child.end,
-            created: child.created,
-            modified: child.modified,
-            ref: child.ref,
-            kind: child.kind,
-          });
-
-          await addTopicChangelog(client, internalChildTopic);
-          let internalChildChangelogId = await proposeChange(client, {
-            changelogId: internalChildTopic,
-            status: ChangeStatus.accepted,
-            added: child.created,
-            modified: child.modified,
-            authorId: NOKI_UID,
-            title: child.title,
-            start: child.start,
-            end: child.end,
-          });
-
-          await addComment(
-            client,
-            internalChildChangelogId,
-            SYS_UID,
-            "Automatically imported timestamp based off of the values provided in NoKi1119's Timestamp document (available [here](https://docs.google.com/document/d/1R8f1IILzJV-xH6LP7Npj5PNgrI8DquxicFjZOxJvQgI/edit))"
-          );
-        } catch (e) {
-          logger.error(e);
-        }
-      }
-    } catch (e) {
-      logger.error(e);
-    }
-  }
+  // if (hasFPCaption.status === 404) {
+  //   if (episode.floatplane !== undefined && episode.floatplane !== null) {
+  //     console.log("Attempting to download VOD from Floatplane");
+  //     let blog = await getBlogPost(episode.floatplane);
+  //     if (blog) {
+  //       let vod = blog.videoAttachments[0];
+  //       let diff =
+  //         vod.duration -
+  //         parseInt(yt.player_response.videoDetails.lengthSeconds);
+  //       episode.preShowOffset = diff;
+  //       episode.description = blog.text;
+  //       await client.data
+  //         .update(episodes)
+  //         .set(episode)
+  //         .where(eq(episodes.id, eid));
+  //     }
+  //   }
+  // }
+  // process.exit();
 }

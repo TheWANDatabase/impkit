@@ -1,3 +1,6 @@
+import { readFileSync } from "fs";
+import { processTopics } from "./topics";
+
 const TIMESTAMP_EXTRACTOR = /((\d{1,2}:{0,1}){1,3}:(\d{1,2}:{0,1}))/;
 const CONTINUANCE_EXTRACTOR = /\[cont.\]/i;
 const MAINLINE_EXTRACTOR = /\[(?:(?:\d?){1,2}(?::{0,1}?)){2,3}\]/;
@@ -8,14 +11,7 @@ const SPONSOR_EXTRACTOR =
 const MERCH_MESSAGE_EXTRACTOR = /merch\smessages\s#{0,1}(\d+)+(?:.+)\*/i;
 const UNKNOWN_TYPE_EXTRACTOR = /\*(.*)\*/i;
 
-const IGNORE_HEADERS = [
-  "Chapters.",
-  "Chapters",
-  "Intro.",
-  "Intro",
-  "Outro.",
-  "Outro",
-];
+const IGNORE_HEADERS = ["Chapters.", "Chapters"];
 
 export type Topic = {
   id?: string;
@@ -27,7 +23,14 @@ export type Topic = {
   created: Date;
   modified: Date;
   ref?: string;
-  kind: "topic" | "merch message" | "sponsor" | "tangent" | "sub topic";
+  kind:
+    | "topic"
+    | "merch message"
+    | "sponsor"
+    | "tangent"
+    | "sub topic"
+    | "intro"
+    | "outro";
   children?: Topic[];
 };
 
@@ -94,17 +97,52 @@ export function parseDocument(text: string): Topic[] {
         if (inMerchMessages) inMerchMessages = false;
 
         if (IGNORE_HEADERS.includes(title)) continue;
-        topics.push({
-          id: "unknown-" + Date.now(),
-          episodeId: "",
-          title: title,
-          start: timestamp,
-          end: 0,
-          created: new Date(),
-          modified: new Date(),
-          kind: "topic",
-          children: [],
-        });
+
+        switch (title.toLowerCase()) {
+          case "intro.":
+          case "intro":
+            topics.push({
+              id: "unknown-" + Date.now(),
+              episodeId: "",
+              title: title,
+              start: timestamp,
+              end: 0,
+              created: new Date(),
+              modified: new Date(),
+              kind: "intro",
+              children: [],
+            });
+            break;
+            
+          case "outro.":
+          case "outro":
+            topics.push({
+              id: "unknown-" + Date.now(),
+              episodeId: "",
+              title: title,
+              start: timestamp,
+              end: 0,
+              created: new Date(),
+              modified: new Date(),
+              kind: "outro",
+              children: [],
+            });
+            break;
+
+          default:
+            topics.push({
+              id: "unknown-" + Date.now(),
+              episodeId: "",
+              title: title,
+              start: timestamp,
+              end: 0,
+              created: new Date(),
+              modified: new Date(),
+              kind: "topic",
+              children: [],
+            });
+            break;
+        }
       }
 
       if (wasContinued) {
@@ -259,7 +297,7 @@ export function parseDocument(text: string): Topic[] {
   return finalized;
 }
 
-function fromHumanReadable(timestamp: string): number {
+export function fromHumanReadable(timestamp: string): number {
   const pieces: string[] = timestamp.split(":");
 
   const raw_seconds: string | undefined = pieces.pop();
@@ -274,4 +312,11 @@ function fromHumanReadable(timestamp: string): number {
   if (raw_days) seconds += parseInt(raw_days) * 24 * 60 * 60;
 
   return seconds;
+}
+
+
+export async function processDocument(client: any, file: string, episode: any) {
+  const text = readFileSync("./stamps/" + file, "utf-8");
+  const topics: Topic[] = await parseDocument(text);
+  await processTopics(client, episode, topics);
 }

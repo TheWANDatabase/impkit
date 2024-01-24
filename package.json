@@ -11,10 +11,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.496.0",
     "datakit": "github:TheWANDatabase/datakit",
     "drizzle-orm": "^0.28.6",
+    "fluent-ffmpeg": "^2.1.2",
     "lumberjack": "github:TheWANDatabase/lumberjack",
-    "luxon": "^3.4.4"
+    "luxon": "^3.4.4",
+    "redis": "^4.6.12",
+    "ytdl-core": "^4.11.5"
   },
   "devDependencies": {
     "@types/luxon": "^3.3.7",
