@@ -1,6 +1,7 @@
 import { S3Client } from "@aws-sdk/client-s3";
 import { Client, ConType } from "datakit";
 import Logger from "lumberjack";
+import { Configuration, IndexApi, SearchApi, UtilsApi } from "manticoresearch-ts";
 import { createClient } from "redis";
 
 export const logger = new Logger("impkit", "0.0.1");
@@ -20,3 +21,11 @@ export const redis = createClient({
   password: process.env["REDIS_PASS"],
   url: `redis://${process.env["REDIS_HOST"]}:${process.env["REDIS_PORT"]}`,
 });
+
+const manticoreConfiguration = new Configuration({
+  basePath: 'http://192.168.0.10:9308'
+})
+
+export const utilsApi = new UtilsApi(manticoreConfiguration);
+export const indexApi = new IndexApi(manticoreConfiguration);
+export const searchApi = new SearchApi(manticoreConfiguration);

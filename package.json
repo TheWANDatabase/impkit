@@ -17,6 +17,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "lumberjack": "github:TheWANDatabase/lumberjack",
     "luxon": "^3.4.4",
+    "manticoresearch-ts": "^4.1.0",
     "redis": "^4.6.12",
     "ytdl-core": "^4.11.5"
   },

@@ -1,13 +1,14 @@
-import { existsSync, readFileSync, readdirSync } from "fs";
-import Logger from "lumberjack";
-import { Client, episodeMarkers, episodes, media } from "datakit";
+import { readdirSync } from "fs";
+import { episodeMarkers, episodes, media } from "datakit";
 import { asc, eq, gte } from "drizzle-orm";
-import { getBlogPost } from "./helpers/floatplane";
-import { downloadVideo, getVideoInfo } from "./helpers/youtube";
-import { logger, client, redis } from "./database";
-import { upload } from "./helpers/s3";
-import { transcribeAudio } from "./helpers/whisper";
-import { installDependencies } from "./helpers/env";
+import {
+  logger,
+  client,
+  redis,
+  indexApi,
+  utilsApi,
+  searchApi,
+} from "./database";
 
 let files = new Map<string, string>();
 let NoKiDocs = readdirSync("./stamps");
@@ -16,8 +17,6 @@ async function runtime() {
   logger.log("Welcome to ImpKit");
 
   await redis.connect();
-
-  // await installDependencies();
 
   logger.info("Parsing Timestamp Document Dates");
   let promises: Promise<void>[] = [];
@@ -121,6 +120,7 @@ async function upsertEpisode(client: any, show: any): Promise<void> {
   }
 
   eid = thumburl.split("/")[4];
+
   let exists =
     (
       await client.data
@@ -207,111 +207,96 @@ async function upsertEpisode(client: any, show: any): Promise<void> {
       .returning();
   }
 
+  /**
+   * FEATURE - SEARCHABLE TOPICS + TITLES
+   *
+   */
+
+  let searchEntity = await searchApi.search({
+    index: "episodes",
+    query: { query_string: show.metadata.title.trim() },
+  });
+
+  if (searchEntity.hits?.total === 0) {
+    indexApi.insert({
+      index: "episodes",
+      doc: {
+        episode_id: eid,
+        title: show.metadata.title.trim(),
+        description: "pending addition",
+      },
+    });
+  }
+
+  /**
+   * END FEATURE
+   */
+
   let [metadata] = await client.data
     .select()
     .from(episodeMarkers)
     .where(eq(episodeMarkers.id, episode.id));
 
-  // if (!metadata.floatplaneCaptions && episode.floatplane) {
-  //   await redis.xAdd("vods", "*", {
-  //     kind: "floatplane",
-  //     id: episode.id,
-  //     vod: episode.floatplane,
-  //   });
-  // }
-
-  if (!metadata.youtubeCaptions) {
-    await redis.xAdd("vods", "*", {
-      kind: "youtube",
-      id: episode.id,
-      vod: episode.id,
-    });
+  if (!metadata.floatplaneCaptions && episode.floatplane) {
+    let exists = (await redis.exists(`vods:${episode.floatplane}`)) > 0;
+    if (!exists) {
+      await redis.set(
+        `vods:${episode.floatplane}`,
+        JSON.stringify({
+          done: false,
+          timings: {
+            download: 0,
+            transcribe: 0,
+            upload: 0,
+            job: 0,
+          },
+          queued: new Date(),
+          completed: null,
+        })
+      );
+      await redis.xAdd("vods", "*", {
+        kind: "floatplane",
+        id: episode.id,
+        vod: episode.floatplane,
+      });
+    }
   }
 
-  // process.exit();
+  if (!metadata.youtubeCaptions) {
+    let exists = (await redis.exists(`vods:${episode.id}`)) > 0;
+    if (!exists) {
+      await redis.set(
+        `vods:${episode.id}`,
+        JSON.stringify({
+          done: false,
+          timings: {
+            download: 0,
+            transcribe: 0,
+            upload: 0,
+            job: 0,
+          },
+          queued: new Date(),
+          completed: null,
+        })
+      );
+      await redis.xAdd("vods", "*", {
+        kind: "youtube",
+        id: episode.id,
+        vod: episode.id,
+      });
+    }
+  }
 
-  // Find the document assigned to this episode ID
+  // // Find the document assigned to this episode ID
   // let document = files.get(episode.id as any);
 
-  // If the document exists, parse it for topic importing
+  // // If the document exists, parse it for topic importing
   // if (document !== undefined) {
   //   logger.info(" - Document found for episode: " + episode.id);
   //   await processDocument(client, document, episode);
   // } else {
-  // // otherwise, import from youtube
+  //   // otherwise, import from youtube
   //   logger.info(" - Document not found for episode: " + episode.id);
-  //  // TODO: Add youtube importing
+  //   // TODO: Add youtube importing
   // }
-  // let hasFPCaption = await fetch(
-  //   `https://cdn.thewandb.com/captions/${episode.id}-fp.vtt`
-  // );
-
-  // let hasYTCaption = await fetch(
-  //   `https://cdn.thewandb.com/captions/${episode.id}.vtt`
-  // );
-
-  // if (hasYTCaption.status === 404) {
-  //   if (!existsSync(`./audio/${yt.player_response.videoDetails.videoId}.mp3`)) {
-  //     console.log("Downloading VOD from Youtube");
-  //     await downloadVideo(yt.player_response.videoDetails.videoId);
-  //   }
-
-  //   if (
-  //     !existsSync(
-  //       `./transcribed/${yt.player_response.videoDetails.videoId}.json`
-  //     )
-  //   ) {
-  //     console.log("Transcribing Audio");
-  //     await transcribeAudio(yt.player_response.videoDetails.videoId);
-  //     await upload(
-  //       `./transcribed/${yt.player_response.videoDetails.videoId}.vtt`,
-  //       `captions/${yt.player_response.videoDetails.videoId}.vtt`
-  //     );
-  //     await client.data
-  //       .update(episodeMarkers)
-  //       .set({
-  //         youtubeCaptions: true,
-  //       })
-  //       .where(eq(episodeMarkers.id, episode.id));
-  //   } else {
-  //     console.log("Uploading Transcripts");
-  //     await upload(
-  //       `./transcribed/${yt.player_response.videoDetails.videoId}.vtt`,
-  //       `captions/${yt.player_response.videoDetails.videoId}.vtt`
-  //     );
-  //     await client.data
-  //       .update(episodeMarkers)
-  //       .set({
-  //         youtubeCaptions: true,
-  //       })
-  //       .where(eq(episodeMarkers.id, episode.id));
-  //   }
-  // } else {
-  //   await client.data
-  //     .update(episodeMarkers)
-  //     .set({
-  //       youtubeCaptions: true,
-  //     })
-  //     .where(eq(episodeMarkers.id, episode.id));
-  // }
-
-  // if (hasFPCaption.status === 404) {
-  //   if (episode.floatplane !== undefined && episode.floatplane !== null) {
-  //     console.log("Attempting to download VOD from Floatplane");
-  //     let blog = await getBlogPost(episode.floatplane);
-  //     if (blog) {
-  //       let vod = blog.videoAttachments[0];
-  //       let diff =
-  //         vod.duration -
-  //         parseInt(yt.player_response.videoDetails.lengthSeconds);
-  //       episode.preShowOffset = diff;
-  //       episode.description = blog.text;
-  //       await client.data
-  //         .update(episodes)
-  //         .set(episode)
-  //         .where(eq(episodes.id, eid));
-  //     }
-  //   }
-  // }
-  // process.exit();
 }

@@ -26,5 +26,3 @@ export async function getBlogPost(
 
   return (await req.json()) satisfies ContentV3GetBlogResponse;
 }
-
-export async function downloadVideo(id: string, path: string): Promise<void> {}
