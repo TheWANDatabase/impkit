@@ -1,0 +1,21 @@
+[package]
+name = "ImportKit"
+version = "0.0.2"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+dotenvy = "0.15.7"
+redis = "0.24.0"
+reqwest = { version = "0.11.23", features = ["json"] }
+tokio = { version = "1.35.1", features = ["full"] }
+dropbox-sdk = "0.18.0"
+tokio-postgres = { version = "0.7.10", features = ["with-chrono-0_4", "with-serde_json-1"] }
+indicatif = { version = "0.17.7", features = ["rayon"] }
+rayon = "1.8.1"
+chrono = { version = "0.4.33", features = ["serde", "clock", "pure-rust-locales", "now"] }
+regex = { version = "1.10.3", features = [] }
+serde = "1.0.195"
+serde_json = "1.0.111"
+uuid = { version = "1.7.0", features = ["serde", "v4"] }
