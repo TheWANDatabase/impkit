@@ -1,0 +1,1035 @@
+[
+  {
+    "id": "1d163779-56bd-4f88-80c6-dfabe2bf481c",
+    "event_type": "control",
+    "metadata": {
+      "control_type": "PRE_ROLL"
+    },
+    "title": "Intro",
+    "start": 67,
+    "end": 0,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0
+  },
+  {
+    "id": "9fb9359a-d7e0-4c99-9615-d758f9e209f9",
+    "event_type": "topic",
+    "metadata": {
+      "links": []
+    },
+    "title": "Ubisoft claims users are comfortable with not owning games.",
+    "start": 98,
+    "end": 2573,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0,
+    "children": [
+      {
+        "id": "da53b4a3-a259-4f0e-b589-e6644d05d205",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " Linus lists down Ubisoft's launcher naming history.\r",
+        "start": 114,
+        "end": 246,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "9520ddc2-884f-4ea9-b21d-b5f3ce503389",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " Ubisoft Classic & Premium, pricing, games published, Luke's hot take.\r",
+        "start": 247,
+        "end": 361,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "8e039d4b-6a47-4b63-8afc-15bdc5609e57",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " Linus's FP exclusive interview with Terren the CEO, \r",
+        "start": 362,
+        "end": 446,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "ae850ac7-0039-43e6-9fec-591526aeb96b",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " Tremblay's quote, Linus mentions CDs, streaming services.\r",
+        "start": 447,
+        "end": 791,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "a717e6de-8901-4efd-9112-799843436aa0",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " Game servers that were shut down, company trust, Ubisoft's stock & finances.\r",
+        "start": 792,
+        "end": 1345,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "64ac14a1-149a-47b9-b4c7-3b996b8dab73",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " Linus mentions Nvidia, Intel, gambling, countries' funds, Pentagon's $52,000 trash can.\r",
+        "start": 1346,
+        "end": 1848,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "9d780b93-8a14-4874-b432-45f9b503b5ce",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " Swen Vincke on the future of games, games, movies, gaming on keyboard.\r",
+        "start": 1849,
+        "end": 2462,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "3ae2fb07-e457-47a8-9caa-65d3bcbc485a",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " BG3 criticized for not joining the subscription model.\r",
+        "start": 2463,
+        "end": 2573,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      }
+    ]
+  },
+  {
+    "id": "dbf869a9-bd59-49b5-bbf5-8542d965151a",
+    "event_type": "topic",
+    "metadata": {
+      "links": []
+    },
+    "title": "SSD shortage expected to increase SSD prices by up to 50%.",
+    "start": 2574,
+    "end": 3066,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0,
+    "children": [
+      {
+        "id": "95f1ca37-9610-445a-a845-b36784138d11",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " How do you deal with these shortages? Linus's retired LEGO set, games.\r",
+        "start": 2643,
+        "end": 3066,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      }
+    ]
+  },
+  {
+    "id": "c62b9b95-0386-40af-83bb-28e215b7ef24",
+    "event_type": "tangent",
+    "metadata": {
+      "links": []
+    },
+    "title": "LTTStore's \"The Steve\" turtleneck, Linus's new profile picture.",
+    "start": 3067,
+    "end": 3498,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0,
+    "children": [
+      {
+        "id": "d5af7edf-821c-4292-9d1f-d10df8e59dd1",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " Linus's Steve Jobs in a past NCIX video, history of controversy.\r",
+        "start": 3202,
+        "end": 3498,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      }
+    ]
+  },
+  {
+    "id": "0996ce7b-1da6-48e7-a2df-320ccdbcc73b",
+    "event_type": "control",
+    "metadata": {
+      "links": []
+    },
+    "title": "Merch Messages",
+    "start": 3499,
+    "end": 4077,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0,
+    "children": [
+      {
+        "id": "df6e7f31-58ea-4718-824c-858687b83908",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Where is the tech industry going? Dealing with pessimism?\r",
+        "start": 3530,
+        "end": 3779,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "8792bc84-e2ba-45a4-8f60-b7263361fdd4",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Which LMG video do you want to serve as a future resource for techies?\r",
+        "start": 3780,
+        "end": 4077,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      }
+    ]
+  },
+  {
+    "id": "f184aa03-de3f-408f-883d-7c6fd8319bec",
+    "event_type": "tangent",
+    "metadata": {
+      "links": []
+    },
+    "title": "Floatplane dies.",
+    "start": 4078,
+    "end": 4108,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0
+  },
+  {
+    "id": "c5d8e37c-17ca-45b0-88e1-4c1c8a2c3bd1",
+    "event_type": "topic",
+    "metadata": {
+      "links": []
+    },
+    "title": "Research shows search engines are getting worse.",
+    "start": 4109,
+    "end": 4760,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0,
+    "children": [
+      {
+        "id": "01d24aa0-c041-400f-9dfc-916a9521b963",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " Luke mentions articles, Linus on site subscriptions, Wikipedia's revenue.\r",
+        "start": 4272,
+        "end": 4681,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "afae3947-c8ea-4fb0-95d1-faf4e9305243",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " Linus mentions Apple's alleged habits, Luke on its worth.\r",
+        "start": 4682,
+        "end": 4760,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      }
+    ]
+  },
+  {
+    "id": "e8ee7ac3-56d3-425b-9da9-1850cb65a5f6",
+    "event_type": "topic",
+    "metadata": {
+      "links": []
+    },
+    "title": "Google blames slow YouTube videos loading on extensions.",
+    "start": 4761,
+    "end": 5181,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0,
+    "children": [
+      {
+        "id": "a8c3806c-6c1e-424a-a272-db1126323103",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " Adblock's past buffer bug, Luke on people jumping on the hate wagon.\r",
+        "start": 4864,
+        "end": 5045,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "0702f2f8-4a1b-4716-b294-6f1834a18b04",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " Google Incognito, Canary's \"more privately\" change.\r",
+        "start": 5046,
+        "end": 5181,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      }
+    ]
+  },
+  {
+    "id": "5989d5c6-3f31-4f23-a45a-073e0be0ed52",
+    "event_type": "control",
+    "metadata": {
+      "control_type": "SPONSOR_SPOTS"
+    },
+    "title": "Sponsor Spots",
+    "start": 5182,
+    "end": 5514,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0,
+    "children": [
+      {
+        "id": "509cafd7-a7c1-42c0-be01-f12aa67a6a39",
+        "event_type": "sponsor_spot",
+        "metadata": {
+          "link": "",
+          "brand": ""
+        },
+        "title": " Divoom Pixoo64 pixel art display.\r",
+        "start": 5201,
+        "end": 5288,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "d679c0be-0b72-4c6f-892f-5ef5cab43052",
+        "event_type": "sponsor_spot",
+        "metadata": {
+          "link": "",
+          "brand": ""
+        },
+        "title": " AG1.\r",
+        "start": 5289,
+        "end": 5359,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "bdfc7db1-b30f-4ef3-84eb-30239bb0b1fc",
+        "event_type": "sponsor_spot",
+        "metadata": {
+          "link": "",
+          "brand": ""
+        },
+        "title": " Odd Pieces puzzles.\r",
+        "start": 5360,
+        "end": 5514,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      }
+    ]
+  },
+  {
+    "id": "7a09403b-75cf-469c-addc-5b32f630d430",
+    "event_type": "control",
+    "metadata": {
+      "control_type": "MERCH_MESSAGES"
+    },
+    "title": "Merch Messages",
+    "start": 5515,
+    "end": 6205,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0,
+    "children": [
+      {
+        "id": "50f2e37c-d31d-4dad-92fe-e5f8d3f0c7cb",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Screen time & social media's impact on mental health?\r",
+        "start": 5521,
+        "end": 5595,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "5abad04a-07b5-4827-8865-3149d8dbd17f",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Linus's favorite gadgets? GamersGrass site.\r",
+        "start": 5596,
+        "end": 5841,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "886d6e5e-1eec-4e34-a0dd-091b7f0c006f",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " HDPLEX's 500W GaN ATX PSU, do you see GaN PSUs in the consumer market?\r",
+        "start": 5842,
+        "end": 6013,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "3db37632-b333-4bdc-9e2c-745538d7545b",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " LTT laptop bag & shoulder bag update? Flocking machine, cable magnetic management, backpack relationship.\r",
+        "start": 6014,
+        "end": 6205,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      }
+    ]
+  },
+  {
+    "id": "56f01656-069b-4584-94a9-a62eac4afb76",
+    "event_type": "topic",
+    "metadata": {
+      "links": []
+    },
+    "title": "Fujitsu's software causes huge blunders in UK post offices.",
+    "start": 6206,
+    "end": 6579,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0
+  },
+  {
+    "id": "6f629fa7-d364-40e9-adef-713ee644faaf",
+    "event_type": "topic",
+    "metadata": {
+      "links": []
+    },
+    "title": "Haier threatens to sue home assistant plugin developer.",
+    "start": 6580,
+    "end": 6931,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0
+  },
+  {
+    "id": "74e964c2-2a9d-4438-96be-b47149e5719c",
+    "event_type": "topic",
+    "metadata": {
+      "links": []
+    },
+    "title": "OpenAI's new policy change, quietly removes ban on military use.",
+    "start": 6932,
+    "end": 6983,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0
+  },
+  {
+    "id": "b5624561-a995-422c-8f6a-1702f26564c7",
+    "event_type": "topic",
+    "metadata": {
+      "links": []
+    },
+    "title": "Alexa Plus, a new model with ChatGPT.",
+    "start": 6984,
+    "end": 7113,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0,
+    "children": [
+      {
+        "id": "1a8953ab-7dba-425b-90c6-1883c2184d4e",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " Linus spells Alexa not to trigger it, Luke trolls Alexa users.\r",
+        "start": 7054,
+        "end": 7113,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      }
+    ]
+  },
+  {
+    "id": "bb945c3a-ec8e-4c6e-90c8-66608c40742c",
+    "event_type": "topic",
+    "metadata": {
+      "links": []
+    },
+    "title": "Apple Vision Pro lacks native apps.",
+    "start": 7114,
+    "end": 7497,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0,
+    "children": [
+      {
+        "id": "63e0d247-878e-4cce-ba69-edd01e4416b0",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " Linus's idea on unsubscribing Arcade on Apple TV, valid credit card.\r",
+        "start": 7144,
+        "end": 7311,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "d1302b2e-225e-4bdb-81f8-4cfe5083f7c1",
+        "event_type": "child_topic",
+        "metadata": {
+          "links": []
+        },
+        "title": " Vision won't be able to access top apps on the App Store, Luke gets Linus.\r",
+        "start": 7312,
+        "end": 7497,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      }
+    ]
+  },
+  {
+    "id": "d125ed72-9f7d-4722-bca1-bd7a7a3619f7",
+    "event_type": "topic",
+    "metadata": {
+      "links": []
+    },
+    "title": "YouTube lays off 100 employees.",
+    "start": 7498,
+    "end": 7530,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0
+  },
+  {
+    "id": "2bdb6d48-9eaf-454a-a63c-198d84434810",
+    "event_type": "topic",
+    "metadata": {
+      "links": []
+    },
+    "title": "AMD's Ryzen 8000G limits PCIe 4.0.",
+    "start": 7531,
+    "end": 7658,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0
+  },
+  {
+    "id": "9506dde7-b349-4c71-bee0-999a176cb55a",
+    "event_type": "control",
+    "metadata": {
+      "control_type": "MERCH_MESSAGES"
+    },
+    "title": "Merch Messages",
+    "start": 7659,
+    "end": 7761,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0,
+    "children": [
+      {
+        "id": "cc04c16b-fb96-421c-8b29-a85bd371f35f",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Sarah Butt chose grass, dbrand non-MagSafe soon to release.\r",
+        "start": 7761,
+        "end": 7890,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "b7596140-edc5-4e16-8ec8-210e6ceb8ba2",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Do you use a funky Windows login process?\r",
+        "start": 7890,
+        "end": 8006,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "2484afd5-4aa8-4de2-a483-325eb5fe85b6",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Early days of LMG's forum & community.\r",
+        "start": 8006,
+        "end": 8172,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "cea76761-206b-4f37-a04c-b7450626154b",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " How do Linus's socks & sandals fair during the Canadian winter?\r",
+        "start": 8172,
+        "end": 8201,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "db49da03-4261-4fab-85a3-8e19b01262b3",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Automatic cleaning bots for the badminton center? ft. WanDB.\r",
+        "start": 8201,
+        "end": 8378,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "3be88421-a02d-48c6-9b00-da723b1661ae",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Future bionic augments for your body, how far will you go?\r",
+        "start": 8378,
+        "end": 8796,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "e0585f25-6af7-4dd8-b9da-3a12b1c142fe",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Tips on effectively researching products before purchase?\r",
+        "start": 8796,
+        "end": 8958,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "a0a13bf2-46ff-4d54-9f74-1b8d4205b3ba",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Public roadmap for Floatplane?\r",
+        "start": 8958,
+        "end": 8971,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "0b2f37b7-fae8-4f9f-8d45-4960333b7bf0",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Any features you wished Wikipedia have?\r",
+        "start": 8971,
+        "end": 9088,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "6f8c4fe8-903f-4673-8ce6-19ab99948d13",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Why can't you emulate CUDA on other hardware?\r",
+        "start": 9088,
+        "end": 9235,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "2b2b4320-976d-44c8-bd82-3213045e55f3",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " What would it take for a new WAN Show intro & set?\r",
+        "start": 9235,
+        "end": 9440,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "55d0711e-571a-49d6-a1b8-b3afd3a6ceee",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Alternatives for Ubiquiti?\r",
+        "start": 9440,
+        "end": 9515,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "27416022-6464-4789-ba65-3c109287bf39",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " If Nvidia buys ARM, do you think it can topple Intel & AMD?\r",
+        "start": 9515,
+        "end": 9647,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "8fad2e32-da2d-4cc5-bbf8-39f225bb8cd6",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Your opinion on the community porting Spiderman 2 to PC?\r",
+        "start": 9647,
+        "end": 9781,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "e68bc610-b4ec-41d9-bb76-60e067760bac",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Progress on the water resistant ballcap?\r",
+        "start": 9781,
+        "end": 9793,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "111b8dd1-fe73-433f-adf6-4d345d9d1732",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Has Luke heard of TARKOV'S SPT?\r",
+        "start": 9793,
+        "end": 9911,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "ddc90697-6c82-4869-b612-6d661e669d2f",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " When will LTT's computer tech video come out?\r",
+        "start": 9911,
+        "end": 9943,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "7ba13707-d71f-4974-976f-ccb83446d999",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Thoughts on algorithm-sorting network switches?\r",
+        "start": 9943,
+        "end": 10067,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "b1359caf-c581-4394-a972-eb868db4d165",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Advice on how to know what I'm doing as a software engineer?\r",
+        "start": 10067,
+        "end": 10089,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "4face138-0350-469f-8b5e-7bd3f97a29a0",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Ever had external validation of your career from an unexpected person?\r",
+        "start": 10089,
+        "end": 10188,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "40d7c770-4e29-46b7-9c48-2ff75243fa0a",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " If SE remakes Final Fantasy VI, what approach should they take?\r",
+        "start": 10188,
+        "end": 10296,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "69c6c3d7-f885-445c-91ec-dc99b9f4dd09",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Luke on making a birb-rito.\r",
+        "start": 10296,
+        "end": 10338,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "70121b1b-c413-45c3-a473-d1fdb7ceba66",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " What advice does Linus have for starting a business in 2024?\r",
+        "start": 10338,
+        "end": 10431,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "adc280d4-7b93-47f4-9e46-fe9d30b24d68",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Are you watching Knox Esports, or will you watch Badminton forever?\r",
+        "start": 10431,
+        "end": 10612,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "76a36656-c637-4313-88eb-4a7aac1d8a32",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Any updates Linus would've done to his home network?\r",
+        "start": 10612,
+        "end": 10752,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "77119a99-d354-4cfa-9faf-a78aa5408413",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " Why are ethically run companies so rare? Instill company ethics in new hires?\r",
+        "start": 10752,
+        "end": 11021,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      },
+      {
+        "id": "886141d6-2f50-45d3-b10f-19fa510c4454",
+        "event_type": "merch_message",
+        "metadata": {
+          "relevant_products": []
+        },
+        "title": " What game do you think was underhyped & overperforming this year? Which one killed the studio?\r",
+        "start": 11021,
+        "end": 11105,
+        "created": "2024-01-20 05:48:48.099000",
+        "modified": "2024-01-20 05:48:48.099000",
+        "episode": "FBQVPOSeRe8",
+        "depth": 1
+      }
+    ]
+  },
+  {
+    "id": "2f71a712-2d4d-4d6b-be27-ee4d2fdf0243",
+    "event_type": "control",
+    "metadata": {
+      "control_type": "POST_ROLL"
+    },
+    "title": "Outro",
+    "start": 11105,
+    "end": 0,
+    "created": "2024-01-20 05:48:48.099000",
+    "modified": "2024-01-20 05:48:48.099000",
+    "episode": "FBQVPOSeRe8",
+    "depth": 0
+  }
+]

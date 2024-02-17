@@ -1,0 +1,31 @@
+[floatplane]
+email = "tom.b.2k2@gmail.com"
+password = "yXMsASd&y2v87k"
+
+[cloudflare]
+account_id = "42fc2b4af54e150e86843a7a80b4c348"
+access_key_id = "55aa160082d83482b6f29cb856920e55"
+secret_access_ley = "37fc05ac3845e3c584ef8e9e6e55678c2acc007b3ac57146297910899a8bb7af"
+token = "AvUeP9l1xkIf87CEdayyrIk5qa1_UdCRDni0zxoe"
+bucket_name = "cdn"
+
+
+[database]
+username = "impkit"
+password = "wHPywwSaaZk2uN"
+host = "65.21.177.172"
+port = 5432
+database = "development"
+
+[redis]
+username = "default"
+password = "eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81"
+host = "192.168.0.10"
+port = 6739
+
+[dropbox]
+client_id = "gw7n7tnpzywrj13"
+oauth_token = "sl.Bua1PxhO2sFkvneWCuC-oIm4ZtmRCMRsonakr3ZncfEkaXkwe6WHNf-cPcf5qi-0r6HoU5WsWDmqy5bSvkhRgGbTUsze_JheXvGG_foLExG3dyo2OnjJHs9prDgeaivLmxjTKanfWYv7lbNTf7uf"
+
+[multithreading]
+thread_count = -1
